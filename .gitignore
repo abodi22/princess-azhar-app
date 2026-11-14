@@ -1,3 +1,7 @@
 node_modules/
 .env
 *.log
+.wrangler/
+worker/deploy-temp.mjs
+worker/check-send.mjs
+worker/remove-check.mjs

@@ -1,0 +1,6 @@
+name = "princess-azhar"
+main = "src/index.js"
+compatibility_date = "2026-11-14"
+
+[vars]
+APP_PASSCODE = "3108"

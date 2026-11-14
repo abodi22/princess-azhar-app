@@ -8,6 +8,27 @@ const themeKey = 'azharTheme';
 const customKey = 'azharCustomTheme';
 const darkKey = 'azharDark';
 const offsetKey = 'azharOffset';
+const sessionKey = 'azharSession';
+const liveApi = 'https://princess-azhar.pastoral-objective.workers.dev';
+
+function isLocalHost(host) {
+  return host === 'localhost'
+    || host === '127.0.0.1'
+    || host.startsWith('192.168.')
+    || host.startsWith('10.')
+    || /^172\.(1[6-9]|2\d|3[0-1])\./.test(host);
+}
+
+function apiRoot() {
+  return isLocalHost(location.hostname) ? '' : liveApi;
+}
+
+function api(path, options = {}) {
+  const headers = new Headers(options.headers || {});
+  const session = sessionStorage.getItem(sessionKey);
+  if (session && !headers.has('Authorization')) headers.set('Authorization', `Bearer ${session}`);
+  return fetch(`${apiRoot()}${path}`, { ...options, headers });
+}
 
 let counters = loadCounters();
 let quickSend = false;
@@ -107,12 +128,12 @@ function undo(type) {
 }
 
 async function sendText(text) {
-  const response = await fetch('/api/send', {
+  const response = await api('/api/send', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ text }),
   });
-  const data = await response.json().catch(() => ({ ok: false, error: 'Messages can only be sent while the app is running on your computer.' }));
+  const data = await response.json().catch(() => ({ ok: false, error: 'Could not send.' }));
   if (!response.ok || !data.ok) throw new Error(data.error || 'Could not send.');
 }
 
@@ -204,7 +225,7 @@ async function pollInbox() {
   polling = true;
   try {
     const offset = localStorage.getItem(offsetKey) || '0';
-    const response = await fetch(`/api/updates?offset=${encodeURIComponent(offset)}`);
+    const response = await api(`/api/updates?offset=${encodeURIComponent(offset)}`);
     const data = await response.json();
     if (!data.ok) return;
     if (data.nextOffset) localStorage.setItem(offsetKey, String(data.nextOffset));
@@ -226,11 +247,15 @@ function setConnection(status) {
 }
 
 async function refreshStatus() {
-  const response = await fetch('/api/status');
-  const status = await response.json();
-  setConnection(status);
-  if (configured) pollInbox();
-  return status;
+  try {
+    const response = await api('/api/status');
+    const status = await response.json();
+    setConnection(status);
+    if (configured) pollInbox();
+    return status;
+  } catch {
+    return null;
+  }
 }
 
 document.querySelectorAll('.sentiment').forEach((button) => {
@@ -438,7 +463,7 @@ function rejectPasscode() {
 
 const savedUnlock = sessionStorage.getItem(visitKey) === '1';
 if (savedUnlock) {
-  fetch('/api/session')
+  api('/api/session')
     .then((response) => response.json())
     .then((data) => {
       if (data.ok) lock.remove();
@@ -455,7 +480,7 @@ document.querySelectorAll('.keypad [data-digit]').forEach((button) => {
       if (passEntry.length < 4) return;
       const code = passEntry;
       try {
-        const response = await fetch('/api/unlock', {
+        const response = await api('/api/unlock', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code }),
@@ -467,8 +492,11 @@ document.querySelectorAll('.keypad [data-digit]').forEach((button) => {
           return;
         }
         const data = await response.json();
-        if (data.ok) unlockApp();
-        else rejectPasscode();
+        if (data.ok) {
+          if (data.session) sessionStorage.setItem(sessionKey, data.session);
+          unlockApp();
+          refreshStatus();
+        } else rejectPasscode();
       } catch {
         if (code === '3108') unlockApp();
         else rejectPasscode();
