@@ -1,0 +1,18 @@
+{
+  "name": "For Princess Azhar",
+  "short_name": "Princess Azhar",
+  "description": "A little app for Princess Azhar",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff0f6",
+  "theme_color": "#ff6fa8",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "black-cat.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

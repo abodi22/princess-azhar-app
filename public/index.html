@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="pink">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ff6fa8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Princess Azhar">
+  <title>For Princess Azhar</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="black-cat.jpg">
+  <link rel="apple-touch-icon" href="black-cat.jpg">
+  <link rel="stylesheet" href="styles.css?v=9">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="loading" class="loading-screen">
+    <img src="black-cat.jpg" alt="">
+    <p class="loading-title">Princess Azhar</p>
+    <div class="loading-bar" aria-hidden="true"><span></span></div>
+  </div>
+
+  <div id="lock" class="lock">
+    <img src="black-cat.jpg" alt="">
+    <p class="lock-title">Princess Azhar</p>
+    <div id="lockDots" class="lock-dots" aria-label="Passcode">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <p id="lockError" class="lock-error" hidden>Wrong code</p>
+    <div class="keypad">
+      <button type="button" data-digit="1">1</button>
+      <button type="button" data-digit="2">2</button>
+      <button type="button" data-digit="3">3</button>
+      <button type="button" data-digit="4">4</button>
+      <button type="button" data-digit="5">5</button>
+      <button type="button" data-digit="6">6</button>
+      <button type="button" data-digit="7">7</button>
+      <button type="button" data-digit="8">8</button>
+      <button type="button" data-digit="9">9</button>
+      <button type="button" id="lockClear">Clear</button>
+      <button type="button" data-digit="0">0</button>
+      <button type="button" id="lockBack" aria-label="Delete">⌫</button>
+    </div>
+  </div>
+
+  <main class="app">
+    <header class="hero">
+      <div class="toolbar">
+        <button id="toggleMusic" class="icon-btn" type="button" aria-label="Play music" aria-pressed="false">🎵 Music</button>
+        <button id="themeButton" class="icon-btn" type="button" aria-label="Change colors">🎨 Color</button>
+        <button id="darkButton" class="icon-btn" type="button" aria-label="Dark mode" aria-pressed="false">🌙 Dark</button>
+      </div>
+      <img class="cat" src="black-cat.jpg" alt="Black cat">
+      <h1>Princess Azhar</h1>
+      <audio id="bgMusic" preload="auto" src="song.mp3"></audio>
+    </header>
+
+    <section class="moods" aria-label="Mood">
+      <button class="mood-btn" type="button" data-mood="happy">😄 Happy</button>
+      <button class="mood-btn" type="button" data-mood="love">💗 Love</button>
+      <button class="mood-btn" type="button" data-mood="sad">😢 Sad</button>
+      <button class="mood-btn" type="button" data-mood="angry">😠 Angry</button>
+    </section>
+
+    <section class="counter card">
+      <div id="totalCount" class="total">0</div>
+      <p>messages sent today</p>
+      <div class="counts">
+        <span>💔 وحشتني <strong id="missCount">0</strong></span>
+        <span>❤️ احبك <strong id="loveCount">0</strong></span>
+        <span>⭐ ابيك <strong id="needCount">0</strong></span>
+      </div>
+    </section>
+
+    <section class="sentiments">
+      <button class="sentiment miss" type="button" data-type="miss" data-message="وحشتني">💔 وحشتني</button>
+      <button class="sentiment love" type="button" data-type="love" data-message="احبك">❤️ احبك</button>
+      <button class="sentiment need" type="button" data-type="need" data-message="ابيك">⭐ ابيك</button>
+    </section>
+
+    <button id="quickSend" class="wide-btn secondary" type="button" aria-pressed="false">⚡ Quick Send Mode</button>
+
+    <form id="customForm" class="composer">
+      <input id="customMessage" class="text-input" type="text" maxlength="1000" dir="auto" placeholder="Type your message..." autocomplete="off">
+      <button class="send-btn" type="submit">📤 Send</button>
+    </form>
+
+    <section class="card inbox">
+      <div class="inbox-head">
+        <h2>💌 Messages</h2>
+        <button id="refreshInbox" class="icon-btn" type="button">🔄 Refresh</button>
+      </div>
+      <div id="inbox">
+        <p id="inboxEmpty" class="hint">Replies will show up here.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="themeMenu" class="menu" hidden>
+    <button type="button" data-theme="pink">Pink</button>
+    <button type="button" data-theme="midnight">Black cat</button>
+    <button type="button" data-theme="lavender">Lavender</button>
+    <button type="button" data-theme="peach">Peach</button>
+    <button type="button" data-theme="mint">Mint</button>
+    <button type="button" data-theme="ocean">Ocean</button>
+    <button id="customThemeButton" type="button">Custom</button>
+  </div>
+
+  <form id="themeCreator" class="menu creator" hidden>
+    <label>Main <input id="primaryColor" type="color" value="#ff6fa8"></label>
+    <label>Soft <input id="secondaryColor" type="color" value="#ffd1e3"></label>
+    <label>Background <input id="backgroundColor" type="color" value="#fff0f6"></label>
+    <button type="submit">Save colors</button>
+  </form>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="app.js?v=9"></script>
+</body>
+</html>
