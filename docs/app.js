@@ -9,7 +9,7 @@ const customKey = 'azharCustomTheme';
 const darkKey = 'azharDark';
 const offsetKey = 'azharOffset';
 const sessionKey = 'azharSession';
-const liveApi = 'https://princess-azhar.pastoral-objective.workers.dev';
+const liveApi = 'https://princess-azhar.global-calendula.workers.dev';
 
 function isLocalHost(host) {
   return host === 'localhost'
@@ -153,7 +153,10 @@ async function processQueue() {
     if (job.tries >= 3) {
       queue.shift();
       if (job.type) undo(job.type);
-      showToast(error.message, 'error');
+      const message = /load failed|failed to fetch|networkerror/i.test(error.message || '')
+        ? 'Could not send.'
+        : (error.message || 'Could not send.');
+      showToast(message, 'error');
     }
   } finally {
     job.button?.classList.remove('loading');

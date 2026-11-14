@@ -6,21 +6,25 @@ const allowedOrigins = new Set([
 
 const hits = new Map();
 
-function json(data, status, origin) {
-  const response = new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'no-store',
-    },
-  });
+function cors(response, origin) {
   if (allowedOrigins.has(origin)) {
     response.headers.set('Access-Control-Allow-Origin', origin);
     response.headers.set('Vary', 'Origin');
   }
   response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  response.headers.set('Access-Control-Max-Age', '86400');
   return response;
+}
+
+function json(data, status, origin) {
+  return cors(new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store',
+    },
+  }), origin);
 }
 
 function hex(buffer) {
@@ -81,7 +85,7 @@ async function telegram(env, method, payload) {
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
-    if (request.method === 'OPTIONS') return json({ ok: true }, 204, origin);
+    if (request.method === 'OPTIONS') return cors(new Response(null, { status: 204 }), origin);
 
     const url = new URL(request.url);
     const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
