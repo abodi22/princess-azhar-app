@@ -1,7 +1,7 @@
 {
-  "name": "For Princess Azhar",
-  "short_name": "Princess Azhar",
-  "description": "A little app for Princess Azhar",
+  "name": "Azhar World",
+  "short_name": "Azhar World",
+  "description": "Messages and cinema for Azhar",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fff0f6",
