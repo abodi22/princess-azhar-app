@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="black-cat.jpg">
   <link rel="apple-touch-icon" href="black-cat.jpg">
-  <link rel="stylesheet" href="styles.css?v=12">
+  <link rel="stylesheet" href="styles.css?v=13">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
@@ -46,41 +46,15 @@
     </div>
   </div>
 
-  <main>
-    <section id="homeView" class="view home active">
-      <img class="cat" src="black-cat.jpg" alt="Black cat">
-      <p class="eyebrow">For the two of you</p>
-      <h1>Azhar World</h1>
-      <p class="hint">Everything we make lives here.</p>
-      <div class="apps">
-        <button class="app-tile" type="button" data-open="messages">
-          <span class="app-icon">💌</span>
-          <span>
-            <strong>Messages</strong>
-            <small>وحشتني · احبك · ابيك</small>
-          </span>
-        </button>
-        <button class="app-tile" type="button" data-open="cinema">
-          <span class="app-icon cinema-icon">🎬</span>
-          <span>
-            <strong>Cinema</strong>
-            <small>Watch together</small>
-          </span>
-        </button>
-      </div>
-    </section>
-
-    <section id="messagesView" class="view app">
+  <main class="app">
     <header class="hero">
       <div class="toolbar">
-        <button id="backHome" class="icon-btn" type="button">← Home</button>
-        <span class="toolbar-spacer"></span>
         <button id="toggleMusic" class="icon-btn" type="button" aria-label="Play music" aria-pressed="false">🎵 Music</button>
         <button id="themeButton" class="icon-btn" type="button" aria-label="Change colors">🎨 Color</button>
         <button id="darkButton" class="icon-btn" type="button" aria-label="Dark mode" aria-pressed="false">🌙 Dark</button>
       </div>
       <img class="cat" src="black-cat.jpg" alt="Black cat">
-      <h1>Princess Azhar</h1>
+      <h1>Azhar World</h1>
       <audio id="bgMusic" preload="auto" src="song.mp3"></audio>
     </header>
 
@@ -123,41 +97,6 @@
         <p id="inboxEmpty" class="hint">Replies will show up here.</p>
       </div>
     </section>
-    </section>
-
-    <section id="cinemaView" class="view cinema">
-      <header class="cinema-bar">
-        <button id="cinemaHome" class="icon-btn light" type="button">← Home</button>
-        <div>
-          <h1>Cinema</h1>
-          <p id="cinemaPresence">Waiting for her</p>
-        </div>
-      </header>
-      <form id="nameForm" class="cinema-card">
-        <p>Pick the name she will see.</p>
-        <input id="cinemaNickname" class="text-input" maxlength="24" placeholder="Your name" autocomplete="nickname">
-        <button class="wide-btn" type="submit">Enter cinema</button>
-      </form>
-      <div id="cinemaRoom" class="cinema-room" hidden>
-        <div class="video-shell">
-          <p id="videoTitle" class="video-title">Paste a YouTube link to start</p>
-          <div class="video-frame">
-            <div id="playerSlot"></div>
-            <button id="joinWatch" class="join-watch" type="button" hidden>Tap to join the watch</button>
-          </div>
-        </div>
-        <form id="videoForm" class="cinema-paste">
-          <input id="videoUrl" class="text-input" type="url" placeholder="Paste a YouTube link" autocomplete="off">
-          <button type="submit">Play</button>
-        </form>
-        <p id="cinemaError" class="cinema-error" hidden></p>
-        <div id="cinemaChat" class="cinema-chat"></div>
-        <form id="cinemaChatForm" class="cinema-compose">
-          <input id="cinemaChatInput" class="text-input" maxlength="500" placeholder="Message" autocomplete="off">
-          <button type="submit">Send</button>
-        </form>
-      </div>
-    </section>
   </main>
 
   <div id="themeMenu" class="menu" hidden>
@@ -178,7 +117,6 @@
   </form>
 
   <div id="toast" class="toast" hidden></div>
-  <script type="module" src="cinema.js?v=1"></script>
-  <script src="app.js?v=12"></script>
+  <script src="app.js?v=13"></script>
 </body>
 </html>

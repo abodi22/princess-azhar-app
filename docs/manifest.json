@@ -1,7 +1,7 @@
 {
   "name": "Azhar World",
   "short_name": "Azhar World",
-  "description": "Messages and cinema for Azhar",
+  "description": "A little world for Azhar",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fff0f6",

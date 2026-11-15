@@ -445,24 +445,10 @@ function renderPasscode() {
   });
 }
 
-function showView(name) {
-  document.querySelectorAll('.view').forEach((view) => {
-    view.classList.toggle('active', view.id === `${name}View`);
-  });
-  document.body.classList.toggle('in-cinema', name === 'cinema');
-  if (name === 'cinema') {
-    stopMusic();
-    window.AzharCinema?.open();
-  } else {
-    window.AzharCinema?.close();
-  }
-}
-
 function unlockApp() {
   sessionStorage.setItem(visitKey, '1');
   lock.classList.add('hide');
   setTimeout(() => lock.remove(), 400);
-  showView('home');
 }
 
 function rejectPasscode() {
@@ -526,12 +512,6 @@ document.querySelectorAll('.keypad [data-digit]').forEach((button) => {
     $('#lockError').hidden = true;
     renderPasscode();
   });
-
-document.querySelectorAll('[data-open]').forEach((button) => {
-  button.addEventListener('click', () => showView(button.dataset.open));
-});
-$('#backHome').addEventListener('click', () => showView('home'));
-$('#cinemaHome').addEventListener('click', () => showView('home'));
 
 $('#lockClear').addEventListener('click', () => {
   passEntry = '';
